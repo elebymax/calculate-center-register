@@ -4,22 +4,22 @@
       <div class="logo-container">
         <img src="../assets/logo.png">
       </div>
-      <mu-text-field class="field-input" v-model="form.studentId" label="學號" hintText="請輸入學號" type="text" labelFloat/><br/>
+      <mu-text-field class="field-input" v-model="form.studentId" :errorText="error.studentId" @blur="checkStudentId" label="學號" hintText="請輸入學號" type="text" labelFloat/><br/>
       <mu-text-field class="field-input" v-model="form.schoolPassword" label="校密碼" hintText="請輸入校密碼" type="password" labelFloat/><br/>
       <mu-text-field class="field-input" v-model="form.username" label="使用者帳號" hintText="請輸入欲設定的帳號" type="text" labelFloat/><br/>
       <mu-text-field class="field-input" v-model="form.password" label="使用者密碼" hintText="請輸入欲設定的密碼" type="password" labelFloat/><br/>
       <mu-text-field class="field-input" v-model="form.rePassword" :errorText="error.rePassword" @blur="checkRePassword" label="再次輸入使用者密碼" hintText="請再次輸入欲設定的密碼" type="password" labelFloat/><br/>
-      <mu-text-field class="field-input" v-model="form.email" label="信箱" hintText="請輸入信箱" type="email" labelFloat/><br/>
+      <mu-text-field class="field-input" v-model="form.email" :errorText="error.email" @blur="checkEmail" label="信箱" hintText="請輸入信箱" type="email" labelFloat/><br/>
       <div class="button-group">
         <mu-raised-button label="重填" class="demo-raised-button button-first" @click="resetForm"/>
-        <mu-raised-button label="送出" class="demo-raised-button button-last" primary @click="sendForm"/>
+        <mu-raised-button label="送出" class="demo-raised-button button-last" primary @click="checkFieldFormat"/>
       </div>
     </mu-paper>
     <mu-dialog :open="progressDialog" title="處理中" :dialogClass="[dialogClass]">
       <mu-circular-progress :size="80"/>
     </mu-dialog>
     <mu-dialog title="訊息" :open="resultDialog" :dialogClass="[dialogClass]">
-      <h3>{{ dialogContent }}</h3>
+      <p>{{ dialogContent }}</p>
       <mu-flat-button label="確定" slot="actions" primary @click="resultDialogClose"/>
     </mu-dialog>
   </div>
@@ -38,8 +38,11 @@
           email: ''
         },
         error: {
-          rePassword: ''
+          studentId: '',
+          rePassword: '',
+          email: ''
         },
+        check: {},
         progressDialog: false,
         resultDialog: false,
         dialogClass: 'dialog',
@@ -56,35 +59,68 @@
           password: this.form.password,
           email: this.form.email
         };
-        this.$http.post( 'http://'+this.serverIP+'/formFill', data).then(function (response) {
+        this.$http.post('http://' + this.serverIP + '/formFill', data).then(function (response) {
           this.progressDialogClose();
           var $ = this;
-          if(response.ok) {
+          if (response.ok) {
             this.dialogContent = "申請成功！";
           }
           this.resultDialogOpen();
         }, function (response) {
           console.log('error');
         });
-        setTimeout( this.checkIfTimeOut, 2000);
+        setTimeout(this.checkIfTimeOut, 2000);
       },
       resetForm () {
-        for(var field in this.form)
+        for (var field in this.form)
           this.form[field] = '';
       },
       checkIfTimeOut () {
-        if(this.progressDialog) {
+        if (this.progressDialog) {
           this.dialogContent = "連線逾時，請重新操作一次！";
           this.progressDialogClose();
           this.resultDialogOpen();
         }
       },
+      checkStudentId () {
+        var reg = /^\d{9}$/;
+        if (reg.test(this.form.studentId)) {
+          this.error.studentId = '';
+        } else {
+          this.error.studentId = '學號格式錯誤';
+        }
+      },
       checkRePassword () {
-        if( this.form.rePassword != this.form.password) {
+        if (this.form.rePassword != this.form.password) {
           this.error.rePassword = '兩次輸入的密碼不相符';
         } else {
           this.error.rePassword = '';
         }
+      },
+      checkEmail () {
+        var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+        if (reg.test(this.form.email)) {
+          this.error.email = '';
+        } else {
+          this.error.email = '信箱格式錯誤';
+        }
+      },
+      checkFieldFormat () {
+        for (var field in this.form) {
+          if (this.form[field] == '') {
+            this.dialogContent = '欄位未填寫或格式錯誤，請重新確認';
+            this.resultDialogOpen();
+            return;
+          }
+        }
+        for (var field in this.error) {
+          if (this.error[field] != '') {
+            this.dialogContent = '欄位未填寫或格式錯誤，請重新確認';
+            this.resultDialogOpen();
+            return;
+          }
+        }
+        this.sendForm();
       },
       progressDialogOpen () {
         this.progressDialog = true;
@@ -119,6 +155,7 @@
 
   .logo-container img {
     width: 100px;
+    display: inline-block;
   }
 
   .field-input input {
@@ -126,7 +163,7 @@
   }
 
   .button-group {
-    padding: 0px 6px 12px 6px;
+    padding: 6px 6px 18px 6px;
   }
 
   button.button-first {
