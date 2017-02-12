@@ -60,16 +60,15 @@
           password: this.form.password,
           email: this.form.email
         };
-        this.$http.post('http://container-manager.cscc.hsexpert.net/users/add', { headers: { 'Access-Control-Allow-Origin': true }}, data).then(function (response) {
+        this.$http.post('http://container-manager.cscc.hsexpert.net/users/add', data ).then(function (response) {
           this.progressDialogClose();
           var $ = this;
           if (response.ok) {
             this.dialogContent = "申請成功！";
           }
-          console.log('success:' +response);
           this.resultDialogOpen();
         }, function (response) {
-          console.log('error:' +response);
+          console.log('error');
         });
         setTimeout(this.checkIfTimeOut, 8000);
       },
