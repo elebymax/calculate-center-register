@@ -63,12 +63,15 @@
         this.$http.post('http://container-manager.cscc.hsexpert.net/users/add', data ).then(function (response) {
           this.progressDialogClose();
           var $ = this;
-          if (response.ok) {
-            this.dialogContent = "申請成功！";
+          if (response.body.status === 200) {
+            this.dialogContent = '申請成功！';
+          } else {
+            this.dialogContent = response.body.message;
           }
           this.resultDialogOpen();
         }, function (response) {
-          console.log('error');
+          this.dialogContent = '程式錯誤，請通知開發人員！';
+          this.resultDialogOpen();
         });
         setTimeout(this.checkIfTimeOut, 8000);
       },
@@ -78,7 +81,7 @@
       },
       checkIfTimeOut () {
         if (this.progressDialog) {
-          this.dialogContent = "連線逾時，請重新操作一次！";
+          this.dialogContent = '連線逾時，請重新操作一次！';
           this.progressDialogClose();
           this.resultDialogOpen();
         }
@@ -109,14 +112,14 @@
       checkFieldFormat () {
         for (var field in this.form) {
           if (this.form[field] == '') {
-            this.dialogContent = '欄位未填寫或格式錯誤，請重新確認';
+            this.dialogContent = '欄位未填寫或格式錯誤，請重新確認！';
             this.resultDialogOpen();
             return;
           }
         }
         for (var field in this.error) {
           if (this.error[field] != '') {
-            this.dialogContent = '欄位未填寫或格式錯誤，請重新確認';
+            this.dialogContent = '欄位未填寫或格式錯誤，請重新確認！';
             this.resultDialogOpen();
             return;
           }
