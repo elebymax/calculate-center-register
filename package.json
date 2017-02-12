@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "vue": "^2.1.10",
-    "vue-router": "^2.2.0"
+    "vue-router": "^2.2.0",
+    "vue-resource": "^1.0.3",
+    "keycode": "^2.1.7",
+    "muse-ui": "^2.0.0-rc.5",
+    "jquery" : "^2.2.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
