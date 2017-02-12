@@ -60,7 +60,7 @@
           password: this.form.password,
           email: this.form.email
         };
-        this.$http.post('http://container-manager.cscc.hsexpert.net/users/add', data ).then(function (response) {
+        this.$http.post('/users/add', data ).then(function (response) {
           this.progressDialogClose();
           var $ = this;
           if (response.body.status === 200) {
