@@ -24,8 +24,14 @@ html, body {
   padding: 12px;
 }
 .logo-container img {
-  width: 100px;
+  height: 80px;
   display: inline-block;
+}
+.top-bar {
+  margin-left: calc(50% - 20px);
+  height: 3px;
+  width: 40px;
+  background-color: #03a9f4;
 }
 .field-input input {
   height: 34px;
@@ -47,4 +53,4 @@ button.button-last {
   padding-top: 1px;
 }
 
-/*# sourceMappingURL=app.5c3f1e84c26f9b41c1c31a8dd54141c0.css.map*/
+/*# sourceMappingURL=app.5ac8029fe5aa386bafd0d3adf95318bb.css.map*/
