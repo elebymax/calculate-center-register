@@ -60,17 +60,18 @@
           password: this.form.password,
           email: this.form.email
         };
-        this.$http.post('http://' + this.serverIP + '/formFill', data).then(function (response) {
+        this.$http.post('http://container-manager.cscc.hsexpert.net/users/add', { headers: { 'Access-Control-Allow-Origin': true }}, data).then(function (response) {
           this.progressDialogClose();
           var $ = this;
           if (response.ok) {
             this.dialogContent = "申請成功！";
           }
+          console.log('success:' +response);
           this.resultDialogOpen();
         }, function (response) {
-          console.log('error');
+          console.log('error:' +response);
         });
-        setTimeout(this.checkIfTimeOut, 2000);
+        setTimeout(this.checkIfTimeOut, 8000);
       },
       resetForm () {
         for (var field in this.form)
