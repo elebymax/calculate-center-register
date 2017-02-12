@@ -2,7 +2,8 @@
   <div>
     <mu-paper class="pager">
       <div class="logo-container">
-        <img src="../assets/logo.png">
+        <img src="../assets/logo2.png">
+        <div class="top-bar"></div>
       </div>
       <mu-text-field class="field-input" v-model="form.studentId" :errorText="error.studentId" @blur="checkStudentId" label="學號" hintText="請輸入學號" type="text" labelFloat/><br/>
       <mu-text-field class="field-input" v-model="form.schoolPassword" label="校密碼" hintText="請輸入校密碼" type="password" labelFloat/><br/>
@@ -154,8 +155,15 @@
   }
 
   .logo-container img {
-    width: 100px;
+    height: 80px;
     display: inline-block;
+  }
+
+  .top-bar {
+    margin-left: calc(50% - 20px);
+    height: 3px;
+    width: 40px;
+    background-color: #03a9f4;
   }
 
   .field-input input {
