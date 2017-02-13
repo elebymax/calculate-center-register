@@ -73,7 +73,7 @@
           this.dialogContent = '程式錯誤，請通知開發人員！';
           this.resultDialogOpen();
         });
-        setTimeout(this.checkIfTimeOut, 8000);
+        setTimeout(this.checkIfTimeOut, 30000);
       },
       resetForm () {
         for (var field in this.form)
