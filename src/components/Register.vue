@@ -60,17 +60,18 @@
           password: this.form.password,
           email: this.form.email
         };
-        this.$http.post('/users/add', data ).then(function (response) {
+        this.$http.post('https://container-manager.cscc.hsexpert.net/users/add', data ).then(function (response) {
           this.progressDialogClose();
           var $ = this;
-          if (response.body.status === 200) {
-            this.dialogContent = '申請成功！';
-          } else {
+          if (response.status === 200) {
             this.dialogContent = response.body.message;
+          } else {
+            this.dialogContent = '錯誤！' + response.body.message + '\n狀態碼：' + status;
           }
           this.resultDialogOpen();
         }, function (response) {
-          this.dialogContent = '程式錯誤，請通知開發人員！';
+          this.progressDialogClose();
+          this.dialogContent = '伺服器錯誤，請通知開發人員！';
           this.resultDialogOpen();
         });
         setTimeout(this.checkIfTimeOut, 30000);
