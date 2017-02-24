@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mu-paper class="pager">
+    <mu-paper class="register-pager">
       <div class="logo-container">
         <img src="../assets/logo2.png">
         <div class="top-bar"></div>
@@ -143,12 +143,12 @@
   }
 </script>
 <style>
-  .pager {
+  .register-pager {
     width: 400px;
     margin: 12px auto 12px calc(50% - 200px);
   }
   @media screen and (max-width: 426px) {
-    .pager {
+    .register-pager {
       margin: 12px;
       width: auto;
     }
