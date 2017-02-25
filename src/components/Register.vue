@@ -47,7 +47,8 @@
         progressDialog: false,
         resultDialog: false,
         dialogClass: 'dialog',
-        dialogContent: ''
+        dialogContent: '',
+        isStatusOk: false,
       }
     },
     methods: {
@@ -65,6 +66,7 @@
           var $ = this;
           if (response.status === 200) {
             this.dialogContent = response.body.message;
+            this.isStatusOk = true;
           } else {
             this.dialogContent = '錯誤！' + response.body.message + '\n狀態碼：' + status;
           }
@@ -138,6 +140,7 @@
       },
       resultDialogClose () {
         this.resultDialog = false;
+        window.location = './#/guide';
       }
     }
   }
