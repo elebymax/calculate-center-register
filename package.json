@@ -9,12 +9,13 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "vue": "^2.1.10",
-    "vue-router": "^2.2.0",
-    "vue-resource": "^1.0.3",
+    "github-markdown-css": "^2.4.1",
+    "jquery": "^2.2.3",
     "keycode": "^2.1.7",
     "muse-ui": "^2.0.0-rc.5",
-    "jquery" : "^2.2.3"
+    "vue": "^2.1.10",
+    "vue-resource": "^1.0.3",
+    "vue-router": "^2.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
