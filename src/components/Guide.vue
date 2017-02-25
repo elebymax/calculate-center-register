@@ -2,7 +2,7 @@
   <div>
     <mu-paper class="guide-pager">
       <h2>個人伺服器空間操作說明</h2>
-      <mu-divider style="height: 2px;"/>
+      <mu-divider />
       <div class="demo-vsteper-container markdown-body">
         <mu-stepper :activeStep="activeStep" orientation="vertical">
           <mu-step>

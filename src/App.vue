@@ -22,13 +22,13 @@
   export default {
     name: 'app',
     computed: {
-      isProgressDialogShow: function() {
+      isProgressDialogShow () {
         return this.$store.getters.progressDialog;
       },
-      isResultDialogShow: function() {
+      isResultDialogShow () {
         return this.$store.getters.resultDialog;
       },
-      getResultDialogContent: function() {
+      getResultDialogContent () {
         return this.$store.getters.resultDialogContent;
       }
     },
@@ -43,10 +43,10 @@
       NavMenu
     },
     methods: {
-      toggleMenu: function() {
+      toggleMenu () {
         this.isMenuOpen = !this.isMenuOpen;
       },
-      resultDialogClose: function() {
+      resultDialogClose () {
         this.$store.commit('resultDialogClose');
       }
     }
@@ -54,9 +54,6 @@
 </script>
 
 <style>
-  html, body {
-    background-color: #eee;
-  }
 
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;

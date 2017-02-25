@@ -22,7 +22,9 @@
   export default {
     name: 'Register',
     computed: {
-
+      isProgressDialogShow: function() {
+        return this.$store.getters.progressDialog;
+      }
     },
     data () {
       return {
@@ -55,10 +57,10 @@
                 password: this.form.password,
                    email: this.form.email
         };
-        this.$http.post('/users/add', data ).then(function (response) {
+        this.$http.post( '/users/add', data ).then( function ( response ) {
           this.progressDialogClose();
           var $ = this;
-          if (response.status === 200) {
+          if ( response.status === 200 ) {
             this.dialogContent = response.body.message;
             this.isStatusOk = true;
           } else {
@@ -66,20 +68,20 @@
           }
           this.setResultDialogContent();
           this.resultDialogOpen();
-        }, function (response) {
+        }, function ( response ) {
           this.progressDialogClose();
           this.dialogContent = '伺服器錯誤，請通知開發人員！';
           this.setResultDialogContent();
           this.resultDialogOpen();
         });
-        setTimeout(this.checkIfTimeOut, 30000);
+        setTimeout( this.checkIfTimeOut, 30000 );
       },
       resetForm () {
-        for (var field in this.form)
+        for ( var field in this.form )
           this.form[field] = '';
       },
       checkIfTimeOut () {
-        if (this.progressDialog) {
+        if ( this.isProgressDialogShow ) {
           this.dialogContent = '連線逾時，請重新操作一次！';
           this.progressDialogClose();
           this.setResultDialogContent();
@@ -88,7 +90,7 @@
       },
       checkStudentId () {
         var reg = /^\d{9}$/;
-        if (reg.test(this.form.studentId)) {
+        if ( reg.test( this.form.studentId ) ) {
           this.error.studentId = '';
         } else {
           this.error.studentId = '學號格式錯誤';
@@ -103,23 +105,23 @@
       },
       checkEmail () {
         var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-        if (reg.test(this.form.email)) {
+        if ( reg.test( this.form.email ) ) {
           this.error.email = '';
         } else {
           this.error.email = '信箱格式錯誤';
         }
       },
       checkFieldFormat () {
-        for (var field in this.form) {
-          if (this.form[field] == '') {
+        for ( var field in this.form ) {
+          if ( this.form[field] == '' ) {
             this.dialogContent = '欄位未填寫或格式錯誤，請重新確認！';
             this.setResultDialogContent();
             this.resultDialogOpen();
             return;
           }
         }
-        for (var field in this.error) {
-          if (this.error[field] != '') {
+        for ( var field in this.error ) {
+          if ( this.error[field] != '' ) {
             this.dialogContent = '欄位未填寫或格式錯誤，請重新確認！';
             this.setResultDialogContent();
             this.resultDialogOpen();
@@ -129,21 +131,22 @@
         this.sendForm();
       },
       setResultDialogContent () {
-        console.log(this.dialogContent);
-        this.$store.commit('setResultDialogContent' , this.dialogContent);
+        this.$store.commit( 'setResultDialogContent' , this.dialogContent );
       },
       progressDialogOpen () {
-        this.$store.commit('progressDialogOpen');
+        this.$store.commit( 'progressDialogOpen' );
       },
       progressDialogClose () {
-        this.$store.commit('progressDialogClose');
+        this.$store.commit( 'progressDialogClose' );
       },
       resultDialogOpen () {
-        this.$store.commit('resultDialogOpen');
+        this.$store.commit( 'resultDialogOpen' );
       },
       resultDialogClose () {
-        this.$store.commit('progressDialogClose');
-//        window.location = './#/guide';
+        this.$store.commit( 'progressDialogClose' );
+        if( this.isStatusOk ) {
+          window.location = './#/guide';
+        }
       }
     }
   }

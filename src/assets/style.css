@@ -1,3 +1,9 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+html, body {
+  background-color: #eee;
+  font-family: 'Noto Sans TC', sans-serif;
+}
 
 .menu-show {
   padding-left: 256px;
@@ -14,6 +20,7 @@
 .pager-400 {
   width: 400px;
   margin: 12px auto 12px calc(50% - 200px);
+  padding: 12px;
 }
 @media screen and (max-width: 426px) {
   .pager-400 {
