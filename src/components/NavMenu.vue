@@ -11,7 +11,7 @@
           <mu-list-item slot="nested" title="查詢帳號" href="./#/findAccount">
             <mu-icon slot="left" value="help_outline"/>
           </mu-list-item>
-          <mu-list-item slot="nested" title="忘記密碼">
+          <mu-list-item slot="nested" title="重設密碼" href="./#/resetPassword">
             <mu-icon slot="left" value="help"/>
           </mu-list-item>
         </mu-list-item>

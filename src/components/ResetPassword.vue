@@ -1,11 +1,13 @@
 <template>
   <div>
     <mu-paper class="pager-400">
-      <h2>帳號查詢</h2>
+      <h2>重設密碼</h2>
       <mu-divider />
-      <div class="find-account-form">
+      <div class="reset-password-form">
         <mu-text-field class="field-input" v-model="form.studentId" :errorText="error.studentId" @blur="checkStudentId" label="學號" hintText="請輸入學號" type="text" labelFloat/><br/>
         <mu-text-field class="field-input" v-model="form.schoolPassword" label="校密碼" hintText="請輸入校密碼" type="password" labelFloat/><br/>
+        <mu-text-field class="field-input" v-model="form.password" label="新的使用者密碼" hintText="請輸入欲設定的密碼" type="password" labelFloat/><br/>
+        <mu-text-field class="field-input" v-model="form.rePassword" :errorText="error.rePassword" @blur="checkRePassword" label="再次輸入新的使用者密碼" hintText="請再次輸入欲設定的密碼" type="password" labelFloat/><br/>
         <div class="button-group">
           <mu-raised-button label="重填" class="demo-raised-button button-first" @click="resetForm"/>
           <mu-raised-button label="送出" class="demo-raised-button button-last" primary @click="checkFieldFormat"/>
@@ -16,7 +18,7 @@
 </template>
 <script>
   export default {
-    name: 'FindAccount',
+    name: 'ResetPassword',
     computed: {
       isProgressDialogShow: function() {
         return this.$store.getters.progressDialog;
@@ -25,24 +27,24 @@
     data () {
       return {
         form: {
-               studentId: '',
+          studentId: '',
           schoolPassword: ''
         },
         error: {
-               studentId: ''
+          studentId: ''
         },
-           dialogContent: ''
+        dialogContent: ''
       }
     },
     methods: {
       sendForm () {
         this.progressDialogOpen();
         var data = {
-               studentId: this.form.studentId,
+          studentId: this.form.studentId,
           schoolPassword: this.form.schoolPassword,
-                username: this.form.username,
-                password: this.form.password,
-                   email: this.form.email
+          username: this.form.username,
+          password: this.form.password,
+          email: this.form.email
         };
         this.$http.post( '/users/add', data ).then( function ( response ) {
           this.progressDialogClose();
@@ -81,6 +83,13 @@
           this.error.studentId = '';
         } else {
           this.error.studentId = '學號格式錯誤';
+        }
+      },
+      checkRePassword () {
+        if (this.form.rePassword != this.form.password) {
+          this.error.rePassword = '兩次輸入的密碼不相符';
+        } else {
+          this.error.rePassword = '';
         }
       },
       checkFieldFormat () {
@@ -122,7 +131,7 @@
   }
 </script>
 <style>
-  .find-account-form {
+  .reset-password-form {
     padding: 12px 0px;
   }
 </style>
