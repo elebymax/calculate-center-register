@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mu-paper class="register-pager">
+    <mu-paper class="pager-400">
       <div class="logo-container">
         <img src="../assets/logo2.png">
         <div class="top-bar"></div>
@@ -16,50 +16,44 @@
         <mu-raised-button label="送出" class="demo-raised-button button-last" primary @click="checkFieldFormat"/>
       </div>
     </mu-paper>
-    <mu-dialog :open="progressDialog" title="處理中" :dialogClass="[dialogClass]">
-      <mu-circular-progress :size="80"/>
-    </mu-dialog>
-    <mu-dialog title="訊息" :open="resultDialog" :dialogClass="[dialogClass]">
-      <p>{{ dialogContent }}</p>
-      <mu-flat-button label="確定" slot="actions" primary @click="resultDialogClose"/>
-    </mu-dialog>
   </div>
 </template>
 <script>
   export default {
     name: 'Register',
+    computed: {
+
+    },
     data () {
       return {
         form: {
-          studentId: '',
+               studentId: '',
           schoolPassword: '',
-          username: '',
-          password: '',
-          rePassword: '',
-          email: ''
+                username: '',
+                password: '',
+              rePassword: '',
+                   email: ''
         },
         error: {
-          studentId: '',
-          rePassword: '',
-          email: ''
+               studentId: '',
+              rePassword: '',
+                   email: ''
         },
-        check: {},
-        progressDialog: false,
-        resultDialog: false,
-        dialogClass: 'dialog',
-        dialogContent: '',
-        isStatusOk: false,
+                   check: {},
+             dialogClass: 'dialog',
+           dialogContent: '',
+              isStatusOk: false,
       }
     },
     methods: {
       sendForm () {
         this.progressDialogOpen();
         var data = {
-          studentId: this.form.studentId,
+               studentId: this.form.studentId,
           schoolPassword: this.form.schoolPassword,
-          username: this.form.username,
-          password: this.form.password,
-          email: this.form.email
+                username: this.form.username,
+                password: this.form.password,
+                   email: this.form.email
         };
         this.$http.post('/users/add', data ).then(function (response) {
           this.progressDialogClose();
@@ -70,10 +64,12 @@
           } else {
             this.dialogContent = '錯誤！' + response.body.message + '\n狀態碼：' + status;
           }
+          this.setResultDialogContent();
           this.resultDialogOpen();
         }, function (response) {
           this.progressDialogClose();
           this.dialogContent = '伺服器錯誤，請通知開發人員！';
+          this.setResultDialogContent();
           this.resultDialogOpen();
         });
         setTimeout(this.checkIfTimeOut, 30000);
@@ -86,6 +82,7 @@
         if (this.progressDialog) {
           this.dialogContent = '連線逾時，請重新操作一次！';
           this.progressDialogClose();
+          this.setResultDialogContent();
           this.resultDialogOpen();
         }
       },
@@ -116,6 +113,7 @@
         for (var field in this.form) {
           if (this.form[field] == '') {
             this.dialogContent = '欄位未填寫或格式錯誤，請重新確認！';
+            this.setResultDialogContent();
             this.resultDialogOpen();
             return;
           }
@@ -123,40 +121,34 @@
         for (var field in this.error) {
           if (this.error[field] != '') {
             this.dialogContent = '欄位未填寫或格式錯誤，請重新確認！';
+            this.setResultDialogContent();
             this.resultDialogOpen();
             return;
           }
         }
         this.sendForm();
       },
+      setResultDialogContent () {
+        console.log(this.dialogContent);
+        this.$store.commit('setResultDialogContent' , this.dialogContent);
+      },
       progressDialogOpen () {
-        this.progressDialog = true;
+        this.$store.commit('progressDialogOpen');
       },
       progressDialogClose () {
-        this.progressDialog = false;
+        this.$store.commit('progressDialogClose');
       },
       resultDialogOpen () {
-        this.resultDialog = true;
+        this.$store.commit('resultDialogOpen');
       },
       resultDialogClose () {
-        this.resultDialog = false;
-        window.location = './#/guide';
+        this.$store.commit('progressDialogClose');
+//        window.location = './#/guide';
       }
     }
   }
 </script>
 <style>
-  .register-pager {
-    width: 400px;
-    margin: 12px auto 12px calc(50% - 200px);
-  }
-  @media screen and (max-width: 426px) {
-    .register-pager {
-      margin: 12px;
-      width: auto;
-    }
-  }
-
   .logo-container {
     padding: 12px;
   }
@@ -171,30 +163,5 @@
     height: 3px;
     width: 40px;
     background-color: #03a9f4;
-  }
-
-  .field-input input {
-    height: 34px;
-  }
-
-  .button-group {
-    padding: 6px 6px 18px 6px;
-  }
-
-  button.button-first {
-    margin-right: 6px;
-  }
-
-  button.button-last {
-    margin-left: 6px;
-  }
-
-  .dialog {
-    width: auto;
-    text-align: center;
-  }
-
-  .dialog .mu-circular-progress {
-    padding-top: 1px;
   }
 </style>

@@ -8,3 +8,43 @@
   padding-left: 0px;
   transition: all .45s cubic-bezier(.23,1,.32,1);
 }
+
+/* pager */
+
+.pager-400 {
+  width: 400px;
+  margin: 12px auto 12px calc(50% - 200px);
+}
+@media screen and (max-width: 426px) {
+  .pager-400 {
+    margin: 12px;
+    width: auto;
+  }
+}
+
+/* form */
+
+.field-input input {
+  height: 34px;
+}
+
+.button-group {
+  padding: 6px 6px 18px 6px;
+}
+
+button.button-first {
+  margin-right: 6px;
+}
+
+button.button-last {
+  margin-left: 6px;
+}
+
+.dialog {
+  width: auto;
+  text-align: center;
+}
+
+.dialog .mu-circular-progress {
+  padding-top: 1px;
+}
