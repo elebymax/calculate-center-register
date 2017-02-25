@@ -44,4 +44,7 @@
     color: #2c3e50;
   }
 
+  .main-content {
+    padding-top: 66px;
+  }
 </style>
