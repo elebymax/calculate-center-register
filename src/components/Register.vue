@@ -25,7 +25,7 @@
     </mu-dialog>
   </div>
 </template>
-<script type="es6">
+<script>
   export default {
     name: 'Register',
     data () {

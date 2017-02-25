@@ -9,6 +9,7 @@ import router from './router';
 import VueResource from 'vue-resource';
 import $ from 'jquery';
 import 'github-markdown-css/github-markdown.css'
+import 'assets/style.css'
 
 Vue.use(MuseUI);
 Vue.use(VueResource);

@@ -1,22 +1,39 @@
 <template>
   <div id="app">
-    <mu-appbar title="伺服器申請表單">
-      <mu-icon-button icon='menu' slot="left"/>
-      <mu-icon-button icon='expand_more' slot="right"/>
-    </mu-appbar>
-    <router-view></router-view>
+    <AppBar :isMenuOpen="isMenuOpen" @toggleMenu="toggleMenu"></AppBar>
+    <NavMenu :isMenuOpen="isMenuOpen"></NavMenu>
+    <div class="main-content" :class="[ isMenuOpen ? 'menu-show' : 'menu-hide' ]">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import AppBar from 'components/AppBar';
+  import NavMenu from 'components/NavMenu';
+
+  export default {
+    name: 'app',
+    data () {
+      return {
+        isMenuOpen: false
+      }
+    },
+    components: {
+      AppBar,
+      NavMenu
+    },
+    methods: {
+      toggleMenu: function() {
+        this.isMenuOpen = !this.isMenuOpen;
+      }
+    }
+  }
 </script>
 
 <style>
   html, body {
-
+    background-color: #eee;
   }
 
   #app {
@@ -26,4 +43,5 @@ export default {
     text-align: center;
     color: #2c3e50;
   }
+
 </style>

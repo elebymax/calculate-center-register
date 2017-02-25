@@ -2,7 +2,7 @@
   <div>
     <mu-paper class="guide-pager">
       <h2>個人伺服器空間操作說明</h2>
-      <mu-divider/>
+      <mu-divider style="height: 2px;"/>
       <div class="demo-vsteper-container markdown-body">
         <mu-stepper :activeStep="activeStep" orientation="vertical">
           <mu-step>
@@ -91,7 +91,7 @@
     margin: 12px auto 12px calc(50% - 300px);
     padding: 12px;
   }
-  @media screen and (max-width: 426px) {
+  @media screen and (max-width: 767px) {
     .guide-pager {
       margin: 12px;
       width: auto;
